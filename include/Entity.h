@@ -20,6 +20,11 @@ class Entity
         std::vector <bodyPart> bodyParts;
 
         int defaultSpeed = 100;
+        int actualSpeed = 100;
+
+        bool isParrying = false;
+        bool isGuarding = false;
+        std::string partGuarding = "";
 
         bool isAlive () {
             for (unsigned int i = 0; i < bodyParts.size (); i++) {
@@ -30,6 +35,28 @@ class Entity
 
             return true;
         }
+
+        void updateActualSpeed () {
+            actualSpeed = defaultSpeed;
+
+            actualSpeed -= weapon.weight;
+
+            for (unsigned int i = 0; i < bodyParts.size (); i++) {
+                if (bodyParts [i].armor.armor > 0) {
+                    actualSpeed -= bodyParts [i].armor.weight;
+                }
+            }
+        }
+
+        void updateStats () {
+            updateActualSpeed ();
+            isParrying = false;
+            isGuarding = false;
+            partGuarding = "";
+        }
+
+        void (*AI)(Entity &parent, Entity &target);
+
 };
 
 #endif // ENTITY_H
