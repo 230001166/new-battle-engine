@@ -6,11 +6,13 @@ class Armor
 {
     public:
         Armor() {}
+        Armor (int ARMOR, int WEIGHT) { armor = ARMOR; maxArmor = armor; weight = WEIGHT; }
         virtual ~Armor() {}
 
-    protected:
+        int armor = 5;
+        int maxArmor = 5;
 
-    private:
+        int weight = 10;
 };
 
 #endif // ARMOR_H

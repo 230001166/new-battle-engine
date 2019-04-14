@@ -1,0 +1,44 @@
+# depslib dependency file v1.0
+1555255423 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\ondestructionfunctions.cpp
+	"onDestructionFunctions.h"
+
+1555255423 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\ondestructionfunctions.h
+
+1555255497 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\statusfunctions.cpp
+	"statusFunctions.h"
+
+1555255497 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\statusfunctions.h
+
+1555258742 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\main.cpp
+	<iostream>
+	"Game.h"
+
+1555257755 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\game.h
+	"Entity.h"
+
+1555257683 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\entity.h
+	<vector>
+	"bodyPart.h"
+	"Status.h"
+	"Weapon.h"
+
+1555257015 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\bodypart.h
+	<string>
+	"Armor.h"
+
+1555258019 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\armor.h
+
+1555255485 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\status.h
+
+1555257980 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\weapon.h
+
+1555258431 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\game.cpp
+	"Game.h"
+
+1555258755 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\skillfunctions.cpp
+	<iostream>
+	"skillFunctions.h"
+
+1555256991 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\skillfunctions.h
+	"Entity.h"
+

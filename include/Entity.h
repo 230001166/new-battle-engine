@@ -19,6 +19,8 @@ class Entity
 
         std::vector <bodyPart> bodyParts;
 
+        int defaultSpeed = 100;
+
         bool isAlive () {
             for (unsigned int i = 0; i < bodyParts.size (); i++) {
                 if (bodyParts [i].health < 0 && bodyParts [i].isVital) {
