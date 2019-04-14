@@ -16,6 +16,39 @@ Game::~Game()
 Entity Game::createEntityFromName (std::string name) {
     Entity entity;
 
+    if (name == "player") {
+        std::cout << "Enter your name: ";
+        std::cin >> entity.name;
+        entity.defaultSpeed = 100;
+
+        Weapon sword ("Sword", 5, 10);
+        entity.weapon = sword;
+
+        bodyPart head; head.name = "Head"; head.isVital = true; head.health = 10; head.maxHealth = 10;
+        Armor headArmor (5, 5); head.armor = headArmor;
+        entity.bodyParts.push_back (head);
+
+        bodyPart torso; torso.name = "Torso"; torso.isVital = true; torso.health = 15; torso.maxHealth = 15;
+        Armor chestArmor (7, 15); torso.armor = chestArmor;
+        entity.bodyParts.push_back (torso);
+
+        bodyPart legs; legs.name = "Legs"; legs.isVital = false; legs.health = 10; legs.maxHealth = 10;
+        Armor legArmor (3, 5); legs.armor = legArmor;
+        entity.bodyParts.push_back (legs);
+    }
+    if (name == "slime") {
+        entity.name = "Slime";
+
+        entity.defaultSpeed = 60;
+
+        Weapon goop ("Goop", 5, 5);
+        entity.weapon = goop;
+
+        bodyPart slime; slime.name = "Slime"; slime.isVital = true; slime.health = 20; slime.maxHealth = 20;
+        entity.bodyParts.push_back (slime);
+
+        entity.AI = aiFunctions::slime;
+    }
     if (name == "bandit-1") {
         entity.name = "Bandit";
 
@@ -37,6 +70,30 @@ Entity Game::createEntityFromName (std::string name) {
         entity.bodyParts.push_back (legs);
 
         entity.AI = aiFunctions::bandit_one;
+    }
+    if (name == "dragon") {
+        entity.name = "Dragon";
+
+        entity.defaultSpeed = 60;
+
+        Weapon claws ("Claws", 6, 5);
+
+        bodyPart head; head.name = "Head"; head.isVital = true; head.health = 22; head.maxHealth = 22;
+        Armor headArmor (5, 5); head.armor = headArmor;
+        entity.bodyParts.push_back (head);
+
+        bodyPart body; body.name = "Body"; body.isVital = true; body.health = 30; body.maxHealth = 30;
+        Armor bodyArmor (35, 15); body.armor = bodyArmor;
+        entity.bodyParts.push_back (body);
+
+        bodyPart legs; legs.name = "Legs"; legs.isVital = false; legs.health = 15; legs.maxHealth = 15;
+        Armor legArmor (5, 5); legs.armor = legArmor;
+        entity.bodyParts.push_back (legs);
+
+        bodyPart tail; tail.name = "Tail"; tail.isVital = false; tail.health = 10; tail.maxHealth = 10;
+        Armor tailArmor (1, 5); tail.armor = tailArmor;
+        entity.bodyParts.push_back (tail);
+
     }
 
     return entity;

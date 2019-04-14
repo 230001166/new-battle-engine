@@ -17,7 +17,8 @@ int main()
     std::cout << bandit.actualSpeed << " / " << bandit.defaultSpeed << std::endl;
 
     std::vector <Entity> enemies; enemies.push_back (bandit);
-    bandit.name = "steve";
-    game.battle (bandit, enemies);
+
+    Entity player = game.createEntityFromName ("player");
+    game.battle (player, enemies);
     return 0;
 }

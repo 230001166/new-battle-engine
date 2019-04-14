@@ -36,8 +36,19 @@
 		</Compiler>
 		<Unit filename="include/Armor.h" />
 		<Unit filename="include/Entity.h" />
+		<Unit filename="include/Game.h" />
+		<Unit filename="include/Weapon.h" />
+		<Unit filename="include/aiFunctions.h" />
 		<Unit filename="include/bodyPart.h" />
+		<Unit filename="include/onDestructionFunctions.h" />
+		<Unit filename="include/skillFunctions.h" />
+		<Unit filename="include/utilityFunctions.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Game.cpp" />
+		<Unit filename="src/aiFunctions.cpp" />
+		<Unit filename="src/onDestructionFunctions.cpp" />
+		<Unit filename="src/skillFunctions.cpp" />
+		<Unit filename="src/utilityFunctions.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
