@@ -18,7 +18,7 @@ Entity Game::createEntityFromName (std::string name) {
 
     if (name == "player") {
         std::cout << "Enter your name: ";
-        std::cin >> entity.name;
+        std::getline (std::cin, entity.name);
         entity.defaultSpeed = 100;
 
         Weapon sword ("Sword", 5, 10);
