@@ -2,7 +2,6 @@
 #define ENTITY_H
 #include <vector>
 #include "bodyPart.h"
-#include "Status.h"
 #include "Weapon.h"
 
 class Entity
@@ -13,7 +12,8 @@ class Entity
 
         std::string name;
 
-        Status status;
+        std::string status = "normal";
+        int statusTurnsLeft = 0;
 
         Weapon weapon;
 
@@ -28,7 +28,7 @@ class Entity
 
         bool isAlive () {
             for (unsigned int i = 0; i < bodyParts.size (); i++) {
-                if (bodyParts [i].health < 0 && bodyParts [i].isVital) {
+                if (bodyParts [i].health < 0 && bodyParts [i].isVital == true) {
                     return false;
                 }
             }
@@ -48,8 +48,17 @@ class Entity
             }
         }
 
+        void updateStatus () {
+            if (statusTurnsLeft == 0) {
+                status = "normal";
+            } else {
+                statusTurnsLeft--;
+            }
+        }
+
         void updateStats () {
             updateActualSpeed ();
+            updateStatus ();
             isParrying = false;
             isGuarding = false;
             partGuarding = "";

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Game.h"
+#include "aiFunctions.h"
 #include "skillFunctions.h"
 
 Game::Game()
@@ -34,6 +35,8 @@ Entity Game::createEntityFromName (std::string name) {
         bodyPart legs; legs.name = "Legs"; legs.isVital = false; legs.health = 9; legs.maxHealth = 9;
         Armor legArmor (6, 7); legs.armor = legArmor;
         entity.bodyParts.push_back (legs);
+
+        entity.AI = aiFunctions::bandit_one;
     }
 
     return entity;
@@ -43,6 +46,7 @@ void Game::battle (Entity &player, std::vector <Entity> &enemies) {
     while (player.isAlive() && factionHasAliveMembers (enemies)) {
         displayPlayerStats (player);
         displayPlayerStats (enemies [0]);
+        player.updateStats ();
         std::cout << "[1] Attack \n[2] Parry\n[3] Guard" << std::endl;
         int choice = -1;
 
@@ -66,11 +70,32 @@ void Game::battle (Entity &player, std::vector <Entity> &enemies) {
                 skillFunctions::attack (player, enemies [enemyTarget], enemies [enemyTarget].bodyParts [bodyPartTarget]);
             } break;
             case 1: {
+                int bodyPartTarget = -1;
 
+                std::cout << "Target which body part?" << std::endl;
+                for (unsigned int i = 0; i < player.bodyParts.size (); i++) {
+                    std::cout << "[" << i+1 << "] - " << player.bodyParts [i].name << std::endl;
+                }
+                while (bodyPartTarget < 1 || bodyPartTarget > player.bodyParts.size ()) { std::cin >> bodyPartTarget; } bodyPartTarget--;
+
+                skillFunctions::parry (player, enemies [0], player.bodyParts [bodyPartTarget]);
             } break;
             case 2: {
+                int bodyPartTarget = -1;
 
+                std::cout << "Target which body part?" << std::endl;
+                for (unsigned int i = 0; i < player.bodyParts.size (); i++) {
+                    std::cout << "[" << i+1 << "] - " << player.bodyParts [i].name << std::endl;
+                }
+                while (bodyPartTarget < 1 || bodyPartTarget > player.bodyParts.size ()) { std::cin >> bodyPartTarget; } bodyPartTarget--;
+
+                skillFunctions::guard (player, enemies [0], player.bodyParts [bodyPartTarget]);
             } break;
+        }
+
+        for (unsigned int i = 0; i < enemies.size (); i++) {
+            enemies [i].updateStats ();
+            enemies [i].AI (enemies [i], player);
         }
 
     }
@@ -79,14 +104,14 @@ void Game::battle (Entity &player, std::vector <Entity> &enemies) {
 bool Game::factionHasAliveMembers (std::vector <Entity> faction) {
 
     for (unsigned int i = 0; i < faction.size (); i++) {
-        if (!faction [i].isAlive ()) { return false; }
+        if (faction [i].isAlive () == false) { return false; }
     }
 
     return true;
 }
 
 void Game::displayPlayerStats (Entity &player) {
-    std::cout << player.name << std::endl;
+    std::cout << player.name << " (" << player.status << ")" << std::endl;
     for (unsigned int i = 0; i < player.bodyParts.size (); i++) {
         std::cout << " - " << player.bodyParts [i].name << " - HP " << player.bodyParts [i].health << " - ARMOR " << player.bodyParts [i].armor.armor << std::endl;
     }

@@ -13,8 +13,12 @@ void skillFunctions::attack (Entity &user, Entity &enemy, bodyPart &target) {
 
     if (enemy.isParrying && target.name == enemy.partGuarding) {
         std::cout << enemy.name << " parried the attack!" << std::endl;
+        user.status = "vulnerable";
+        user.statusTurnsLeft = 1;
     } else {
         if (enemy.isGuarding && target.name == enemy.partGuarding) { baseDamage = 0; std::cout << enemy.name << " blocked the attack!" << std::endl; }
+
+        if (enemy.status == "vulnerable") { baseDamage *= 1.5; }
 
         if (target.armor.armor > 0) {
             if (baseDamage > target.armor.armor) {
@@ -33,3 +37,14 @@ void skillFunctions::attack (Entity &user, Entity &enemy, bodyPart &target) {
 
 }
 
+void skillFunctions::parry (Entity &user, Entity &enemy, bodyPart &target) {
+    user.partGuarding = target.name;
+    user.isParrying = true;
+    std::cout << user.name << " is ready to parry an attack!" << std::endl;
+}
+
+void skillFunctions::guard (Entity &user, Entity &enemy, bodyPart &target) {
+    user.partGuarding = target.name;
+    user.isGuarding = true;
+    std::cout << user.name << " is ready to block an attack!" << std::endl;
+}
