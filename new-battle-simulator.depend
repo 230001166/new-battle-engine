@@ -9,11 +9,11 @@
 
 1555255497 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\statusfunctions.h
 
-1555285190 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\main.cpp
+1555332001 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\main.cpp
 	<iostream>
 	"Game.h"
 
-1555276620 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\game.h
+1555331976 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\game.h
 	"Entity.h"
 
 1555282156 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\entity.h
@@ -31,26 +31,27 @@
 
 1555257980 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\weapon.h
 
-1555285273 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\game.cpp
+1555426933 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\game.cpp
 	<iostream>
 	"Game.h"
 	"aiFunctions.h"
 	"skillFunctions.h"
+	"utilityFunctions.h"
 
-1555285402 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\skillfunctions.cpp
+1555329198 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\skillfunctions.cpp
 	<iostream>
 	"skillFunctions.h"
 
 1555281304 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\skillfunctions.h
 	"Entity.h"
 
-1555283060 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\aifunctions.cpp
+1555426475 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\aifunctions.cpp
 	<iostream>
 	"aiFunctions.h"
 	"skillFunctions.h"
 	"utilityFunctions.h"
 
-1555283022 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\aifunctions.h
+1555426514 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\aifunctions.h
 	"Entity.h"
 
 1555280929 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\utilityfunctions.cpp

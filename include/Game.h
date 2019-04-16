@@ -12,10 +12,12 @@ class Game
 
         void battle (Entity &player, std::vector <Entity> &enemies);
 
+        void loop ();
     private:
         bool factionHasAliveMembers (std::vector <Entity> faction);
 
         void displayPlayerStats (Entity &player);
+
 };
 
 #endif // GAME_H

@@ -15,10 +15,12 @@ void skillFunctions::attack (Entity &user, Entity &enemy, bodyPart &target) {
         std::cout << enemy.name << " parried the attack!" << std::endl;
         user.status = "vulnerable";
         user.statusTurnsLeft = 1;
-    } else if (target.name != enemy.partGuarding) {
+        enemy.isParrying = false;
+    } else if (enemy.isParrying && target.name != enemy.partGuarding) {
         std::cout << enemy.name << " was caught off guard!" << std::endl;
         enemy.status = "vulnerable";
         enemy.statusTurnsLeft = 1;
+        enemy.isParrying = false;
     } else {
         if (enemy.isGuarding && target.name == enemy.partGuarding) { baseDamage = 0; std::cout << enemy.name << " blocked the attack!" << std::endl; }
 

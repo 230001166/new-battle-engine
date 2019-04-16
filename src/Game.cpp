@@ -2,6 +2,7 @@
 #include "Game.h"
 #include "aiFunctions.h"
 #include "skillFunctions.h"
+#include "utilityFunctions.h"
 
 Game::Game()
 {
@@ -21,7 +22,7 @@ Entity Game::createEntityFromName (std::string name) {
         std::getline (std::cin, entity.name);
         entity.defaultSpeed = 100;
 
-        Weapon sword ("Sword", 5, 10);
+        Weapon sword ("Sword", 6, 10);
         entity.weapon = sword;
 
         bodyPart head; head.name = "Head"; head.isVital = true; head.health = 10; head.maxHealth = 10;
@@ -49,10 +50,24 @@ Entity Game::createEntityFromName (std::string name) {
 
         entity.AI = aiFunctions::slime;
     }
+    if (name == "rat") {
+        entity.name = "Rat";
+
+        entity.defaultSpeed = 80;
+
+        Weapon fangs ("Fangs", 2, 1);
+        entity.weapon = fangs;
+
+        bodyPart body; body.name = "body"; body.isVital = true; body.health = 8; body.maxHealth = 8;
+        Armor bodyArmor (0, 0); body.armor = bodyArmor;
+        entity.bodyParts.push_back (body);
+
+        entity.AI = aiFunctions::rat;
+    }
     if (name == "bandit-1") {
         entity.name = "Bandit";
 
-        entity.defaultSpeed = 125;
+        entity.defaultSpeed = 85;
 
         Weapon dagger ("Dagger", 5, 7);
         entity.weapon = dagger;
@@ -70,6 +85,28 @@ Entity Game::createEntityFromName (std::string name) {
         entity.bodyParts.push_back (legs);
 
         entity.AI = aiFunctions::bandit_one;
+    }
+    if (name == "bandit-2") {
+        entity.name = "Bandit";
+
+        entity.defaultSpeed = 140;
+
+        Weapon sickle ("Sickle", 6, 5);
+        entity.weapon = sickle;
+
+        bodyPart head; head.name = "Head"; head.isVital = true; head.health = 7; head.maxHealth = 7;
+        Armor headArmor (3, 4); head.armor = headArmor;
+        entity.bodyParts.push_back (head);
+
+        bodyPart torso; torso.name = "Torso"; torso.isVital = true; torso.health = 10; torso.maxHealth = 10;
+        Armor chestArmor (5, 4); torso.armor = chestArmor;
+        entity.bodyParts.push_back (torso);
+
+        bodyPart legs; legs.name = "Legs"; legs.isVital = false; legs.health = 9; legs.maxHealth = 9;
+        Armor legArmor (1, 1); legs.armor = legArmor;
+        entity.bodyParts.push_back (legs);
+
+        entity.AI = aiFunctions::bandit_two;
     }
     if (name == "dragon") {
         entity.name = "Dragon";
@@ -102,7 +139,12 @@ Entity Game::createEntityFromName (std::string name) {
 void Game::battle (Entity &player, std::vector <Entity> &enemies) {
     while (player.isAlive() && factionHasAliveMembers (enemies)) {
         displayPlayerStats (player);
-        displayPlayerStats (enemies [0]);
+        std::cout << "vs." << std::endl;
+        for (unsigned int i = 0; i < enemies.size (); i++) {
+            if (enemies [i].isAlive ()) {
+                displayPlayerStats (enemies [i]);
+            }
+        }
         player.updateStats ();
         std::cout << "[1] Attack \n[2] Parry\n[3] Guard" << std::endl;
         int choice = -1;
@@ -114,7 +156,9 @@ void Game::battle (Entity &player, std::vector <Entity> &enemies) {
                 int enemyTarget = -1, bodyPartTarget = -1;
                 std::cout << "Target which enemy?" << std::endl;
                 for (unsigned int i = 0; i < enemies.size (); i++) {
-                    std::cout << "[" << i+1 << "] - " << enemies [i].name << std::endl;
+                    if (enemies [i].isAlive ()) {
+                        std::cout << "[" << i+1 << "] - " << enemies [i].name << std::endl;
+                    }
                 }
                 while (enemyTarget < 1 || enemyTarget > enemies.size ()) { std::cin >> enemyTarget; } enemyTarget--;
 
@@ -151,20 +195,22 @@ void Game::battle (Entity &player, std::vector <Entity> &enemies) {
         }
 
         for (unsigned int i = 0; i < enemies.size (); i++) {
-            enemies [i].updateStats ();
-            enemies [i].AI (enemies [i], player);
+            if (enemies [i].isAlive ()) {
+                enemies [i].updateStats ();
+                enemies [i].AI (enemies [i], player);
+            }
         }
 
     }
 }
 
 bool Game::factionHasAliveMembers (std::vector <Entity> faction) {
-
+    bool factionMemberIsAlive = false;
     for (unsigned int i = 0; i < faction.size (); i++) {
-        if (faction [i].isAlive () == false) { return false; }
+        if (faction [i].isAlive ()) { factionMemberIsAlive = true; }
     }
 
-    return true;
+    return factionMemberIsAlive;
 }
 
 void Game::displayPlayerStats (Entity &player) {
@@ -172,4 +218,21 @@ void Game::displayPlayerStats (Entity &player) {
     for (unsigned int i = 0; i < player.bodyParts.size (); i++) {
         std::cout << " - " << player.bodyParts [i].name << " - HP " << player.bodyParts [i].health << " - ARMOR " << player.bodyParts [i].armor.armor << std::endl;
     }
+}
+
+void Game::loop () {
+    Entity player = createEntityFromName ("player");
+    while (player.isAlive ()) {
+        const int NUMBER_OF_ENEMIES = 5;
+        std::string enemyNames [NUMBER_OF_ENEMIES] = {"slime","bandit-1","bandit-2","dragon","rat"};
+        Entity enemy;
+
+        enemy = createEntityFromName ("rat");
+        enemy.updateActualSpeed ();
+
+        std::vector <Entity> enemies; enemies.push_back (enemy); enemies.push_back (enemy); enemies.push_back (enemy); enemies.push_back (enemy);
+
+        battle (player, enemies);
+    }
+
 }
