@@ -24,21 +24,21 @@ void aiFunctions::bandit_one (Entity &user, Entity &target) {
         randomNumber = utilityFunctions::random (1, targetPriorities::head + targetPriorities::torso + targetPriorities::legs);
 
         if (randomNumber <= targetPriorities::head) {
-            skillFunctions::parry (user, target, user.bodyParts [0]);
+            skillFunctions::parry (user, user.bodyParts [0]);
         } else if (randomNumber <= targetPriorities::head + targetPriorities::torso) {
-            skillFunctions::parry (user, target, user.bodyParts [1]);
+            skillFunctions::parry (user, user.bodyParts [1]);
         } else {
-            skillFunctions::parry (user, target, user.bodyParts [2]);
+            skillFunctions::parry (user, user.bodyParts [2]);
         }
     } else {
         randomNumber = utilityFunctions::random (1, targetPriorities::head + targetPriorities::torso + targetPriorities::legs);
 
         if (randomNumber <= targetPriorities::head) {
-            skillFunctions::guard (user, target, user.bodyParts [0]);
+            skillFunctions::guard (user, user.bodyParts [0]);
         } else if (randomNumber <= targetPriorities::head + targetPriorities::torso) {
-            skillFunctions::guard (user, target, user.bodyParts [1]);
+            skillFunctions::guard (user, user.bodyParts [1]);
         } else {
-            skillFunctions::guard (user, target, user.bodyParts [2]);
+            skillFunctions::guard (user, user.bodyParts [2]);
         }
     }
 }
@@ -64,21 +64,21 @@ void aiFunctions::bandit_two (Entity &user, Entity &target) {
         randomNumber = utilityFunctions::random (1, targetPriorities::head + targetPriorities::torso + targetPriorities::legs);
 
         if (randomNumber <= targetPriorities::head) {
-            skillFunctions::parry (user, target, user.bodyParts [0]);
+            skillFunctions::parry (user, user.bodyParts [0]);
         } else if (randomNumber <= targetPriorities::head + targetPriorities::torso) {
-            skillFunctions::parry (user, target, user.bodyParts [1]);
+            skillFunctions::parry (user, user.bodyParts [1]);
         } else {
-            skillFunctions::parry (user, target, user.bodyParts [2]);
+            skillFunctions::parry (user, user.bodyParts [2]);
         }
     } else {
         randomNumber = utilityFunctions::random (1, targetPriorities::head + targetPriorities::torso + targetPriorities::legs);
 
         if (randomNumber <= targetPriorities::head) {
-            skillFunctions::guard (user, target, user.bodyParts [0]);
+            skillFunctions::guard (user, user.bodyParts [0]);
         } else if (randomNumber <= targetPriorities::head + targetPriorities::torso) {
-            skillFunctions::guard (user, target, user.bodyParts [1]);
+            skillFunctions::guard (user, user.bodyParts [1]);
         } else {
-            skillFunctions::guard (user, target, user.bodyParts [2]);
+            skillFunctions::guard (user, user.bodyParts [2]);
         }
     }
 }
@@ -101,7 +101,7 @@ void aiFunctions::slime (Entity &user, Entity &target) {
             skillFunctions::attack (user, target, target.bodyParts [2]);
         }
     } else if (randomNumber <= PARRY_CHANCE+ATTACK_CHANCE) {
-        skillFunctions::parry (user, target, user.bodyParts [0]);
+        skillFunctions::parry (user, user.bodyParts [0]);
     }
 }
 
@@ -123,6 +123,6 @@ void aiFunctions::rat (Entity &user, Entity &target) {
             skillFunctions::attack (user, target, target.bodyParts [2]);
         }
     } else if (randomNumber <= PARRY_CHANCE+ATTACK_CHANCE) {
-        skillFunctions::parry (user, target, user.bodyParts [0]);
+        skillFunctions::parry (user, user.bodyParts [0]);
     }
 }

@@ -43,13 +43,13 @@ void skillFunctions::attack (Entity &user, Entity &enemy, bodyPart &target) {
 
 }
 
-void skillFunctions::parry (Entity &user, Entity &enemy, bodyPart &target) {
+void skillFunctions::parry (Entity &user, bodyPart &target) {
     user.partGuarding = target.name;
     user.isParrying = true;
     std::cout << user.name << " is ready to parry an attack!" << std::endl;
 }
 
-void skillFunctions::guard (Entity &user, Entity &enemy, bodyPart &target) {
+void skillFunctions::guard (Entity &user, bodyPart &target) {
     user.partGuarding = target.name;
     user.isGuarding = true;
     std::cout << user.name << " is ready to block an attack!" << std::endl;

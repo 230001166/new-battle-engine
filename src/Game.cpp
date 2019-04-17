@@ -157,11 +157,11 @@ void Game::battle (std::vector <Entity> &combatants) {
                     } break;
                     case 1: {
                         int bodyPartTarget = getGuardTargetIndex (combatants [i]);
-                        skillFunctions::parry (combatants [i], combatants [i], combatants [i].bodyParts [bodyPartTarget]);
+                        skillFunctions::parry (combatants [i], combatants [i].bodyParts [bodyPartTarget]);
                     } break;
                     case 2: {
                         int bodyPartTarget = getGuardTargetIndex (combatants [i]);
-                        skillFunctions::guard (combatants [i], combatants [i], combatants [i].bodyParts [bodyPartTarget]);
+                        skillFunctions::guard (combatants [i], combatants [i].bodyParts [bodyPartTarget]);
                     } break;
                 }
             }
