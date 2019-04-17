@@ -11,6 +11,7 @@ class Entity
         virtual ~Entity() {}
 
         std::string name;
+        std::string faction = "enemy";
 
         std::string status = "normal";
         int statusTurnsLeft = 0;

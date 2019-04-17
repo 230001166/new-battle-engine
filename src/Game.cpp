@@ -36,6 +36,8 @@ Entity Game::createEntityFromName (std::string name) {
         bodyPart legs; legs.name = "Legs"; legs.isVital = false; legs.health = 10; legs.maxHealth = 10;
         Armor legArmor (3, 5); legs.armor = legArmor;
         entity.bodyParts.push_back (legs);
+
+        entity.faction = "player";
     }
     if (name == "slime") {
         entity.name = "Slime";
@@ -136,53 +138,54 @@ Entity Game::createEntityFromName (std::string name) {
     return entity;
 }
 
-void Game::battle (Entity &player, std::vector <Entity> &enemies) {
-    while (player.isAlive() && factionHasAliveMembers (enemies)) {
-        displayCombatantStats (player, enemies);
-        player.updateStats ();
-        std::cout << "[1] Attack \n[2] Parry\n[3] Guard" << std::endl;
-        int choice = -1;
+void Game::battle (std::vector <Entity> &combatants) {
+    while (factionHasAliveMembers (combatants, "player") && factionHasAliveMembers (combatants, "enemy")) {
+        displayCombatantStats (combatants);
+        for (unsigned int i = 0; i < combatants.size (); i++) {
+            if (combatants [i].isAlive () && combatants [i].faction == "player") {
+                combatants [i].updateStats ();
+                std::cout << "[1] Attack \n[2] Parry\n[3] Guard" << std::endl;
+                int choice = -1;
 
-        while (choice < 1 || choice > 3) { std::cin >> choice; } choice--;
+                while (choice < 1 || choice > 3) { std::cin >> choice; } choice--;
 
-        switch (choice) {
-            case 0: {
-                inputPlayerTarget (player, enemies);
-            } break;
-            case 1: {
-                int bodyPartTarget = getGuardTargetIndex (player);
-                skillFunctions::parry (player, enemies [0], player.bodyParts [bodyPartTarget]);
-            } break;
-            case 2: {
-                int bodyPartTarget = getGuardTargetIndex (player);
-                skillFunctions::guard (player, enemies [0], player.bodyParts [bodyPartTarget]);
-            } break;
-        }
-
-        for (unsigned int i = 0; i < enemies.size (); i++) {
-            if (enemies [i].isAlive ()) {
-                enemies [i].updateStats ();
-                enemies [i].AI (enemies [i], player);
+                switch (choice) {
+                    case 0: {
+                        inputPlayerTarget (combatants [i], combatants);
+                    } break;
+                    case 1: {
+                        int bodyPartTarget = getGuardTargetIndex (combatants [i]);
+                        skillFunctions::parry (combatants [i], combatants [i], combatants [i].bodyParts [bodyPartTarget]);
+                    } break;
+                    case 2: {
+                        int bodyPartTarget = getGuardTargetIndex (combatants [i]);
+                        skillFunctions::guard (combatants [i], combatants [i], combatants [i].bodyParts [bodyPartTarget]);
+                    } break;
+                }
+            }
+            if (combatants [i].isAlive () && combatants [i].faction == "enemy") {
+                combatants [i].updateStats ();
+                combatants [i].AI (combatants [i], combatants [0]);
             }
         }
 
     }
 }
 
-void Game::inputPlayerTarget (Entity &player, std::vector <Entity> &enemies) {
+void Game::inputPlayerTarget (Entity &player, std::vector <Entity> &combatants) {
     int enemyTarget = -1, bodyPartTarget = -1;
     std::vector <int> validTargetIndices;
 
-    for (unsigned int i = 0; i < enemies.size (); i++) {
-        if (enemies [i].isAlive ()) {
+    for (unsigned int i = 0; i < combatants.size (); i++) {
+        if (combatants [i].isAlive () && combatants [i].faction == "enemy") {
             validTargetIndices.push_back (i);
         }
     }
 
     std::cout << "Target which enemy?" << std::endl;
     for (unsigned int i = 0; i < validTargetIndices.size (); i++) {
-        if (enemies [validTargetIndices [i]].isAlive ()) {
-            std::cout << "[" << i+1 << "] - " << enemies [validTargetIndices [i]].name << std::endl;
+        if (combatants [validTargetIndices [i]].isAlive ()) {
+            std::cout << "[" << i+1 << "] - " << combatants [validTargetIndices [i]].name << std::endl;
         }
     }
     while (enemyTarget < 1 || enemyTarget > validTargetIndices.size ()) { std::cin >> enemyTarget; } enemyTarget--;
@@ -190,19 +193,19 @@ void Game::inputPlayerTarget (Entity &player, std::vector <Entity> &enemies) {
 
     validTargetIndices.clear ();
 
-    for (unsigned int i = 0; i < enemies [enemyTarget].bodyParts.size (); i++) {
-        if (enemies [enemyTarget].bodyParts [i].health > 0) {
+    for (unsigned int i = 0; i < combatants [enemyTarget].bodyParts.size (); i++) {
+        if (combatants [enemyTarget].bodyParts [i].health > 0) {
             validTargetIndices.push_back (i);
         }
     }
     std::cout << "Target which body part?" << std::endl;
     for (unsigned int i = 0; i < validTargetIndices.size (); i++) {
-        std::cout << "[" << i+1 << "] - " << enemies [enemyTarget].bodyParts [validTargetIndices [i]].name << std::endl;
+        std::cout << "[" << i+1 << "] - " << combatants [enemyTarget].bodyParts [validTargetIndices [i]].name << std::endl;
     }
     while (bodyPartTarget < 1 || bodyPartTarget > validTargetIndices.size ()) { std::cin >> bodyPartTarget; } bodyPartTarget--;
     bodyPartTarget = validTargetIndices [bodyPartTarget];
 
-    skillFunctions::attack (player, enemies [enemyTarget], enemies [enemyTarget].bodyParts [bodyPartTarget]);
+    skillFunctions::attack (player, combatants [enemyTarget], combatants [enemyTarget].bodyParts [bodyPartTarget]);
 }
 
 int Game::getGuardTargetIndex (Entity &player) {
@@ -225,21 +228,24 @@ int Game::getGuardTargetIndex (Entity &player) {
     return bodyPartTarget;
 }
 
-bool Game::factionHasAliveMembers (std::vector <Entity> faction) {
+bool Game::factionHasAliveMembers (std::vector <Entity> combatants, std::string faction) {
     bool factionMemberIsAlive = false;
-    for (unsigned int i = 0; i < faction.size (); i++) {
-        if (faction [i].isAlive ()) { factionMemberIsAlive = true; }
+    for (unsigned int i = 0; i < combatants.size (); i++) {
+        if (combatants [i].isAlive () && combatants [i].faction == faction) { factionMemberIsAlive = true; }
     }
 
     return factionMemberIsAlive;
 }
 
-void Game::displayCombatantStats (Entity &player, std::vector <Entity> &enemies) {
-    displayPlayerStats (player);
-    std::cout << "vs." << std::endl;
-    for (unsigned int i = 0; i < enemies.size (); i++) {
-        if (enemies [i].isAlive ()) {
-            displayPlayerStats (enemies [i]);
+void Game::displayCombatantStats (std::vector <Entity> &combatants) {
+    for (unsigned int i = 0; i < combatants.size (); i++) {
+        if (combatants [i].isAlive () && combatants [i].faction == "player") {
+            std::cout << "PLAYER ";
+            displayPlayerStats (combatants [i]);
+        }
+        if (combatants [i].isAlive () && combatants [i].faction == "enemy") {
+            std::cout << "ENEMY ";
+            displayPlayerStats (combatants [i]);
         }
     }
 }
@@ -261,9 +267,13 @@ void Game::loop () {
         enemy = createEntityFromName ("rat");
         enemy.updateActualSpeed ();
 
-        std::vector <Entity> enemies; enemies.push_back (enemy); enemies.push_back (enemy); enemy = createEntityFromName ("bandit-1"); enemies.push_back (enemy);
+        std::vector <Entity> combatants;
+        combatants.push_back (player);
+        combatants.push_back (enemy);
+        combatants.push_back (enemy);
+        enemy = createEntityFromName ("bandit-1"); combatants.push_back (enemy);
 
-        battle (player, enemies);
+        battle (combatants);
     }
 
 }

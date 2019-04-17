@@ -10,17 +10,18 @@ class Game
 
         Entity createEntityFromName (std::string name);
 
-        void battle (Entity &player, std::vector <Entity> &enemies);
+        void battle (std::vector <Entity> &combatants);
 
         void loop ();
-    private:
-        bool factionHasAliveMembers (std::vector <Entity> faction);
 
-        void displayCombatantStats (Entity &player, std::vector <Entity> &enemies);
+    private:
+        bool factionHasAliveMembers (std::vector <Entity> combatants, std::string faction);
+
+        void displayCombatantStats (std::vector <Entity> &combatants);
 
         void displayPlayerStats (Entity &player);
 
-        void inputPlayerTarget (Entity &player, std::vector <Entity> &enemies);
+        void inputPlayerTarget (Entity &player, std::vector <Entity> &combatants);
 
         int getGuardTargetIndex (Entity &player);
 
