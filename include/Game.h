@@ -16,7 +16,13 @@ class Game
     private:
         bool factionHasAliveMembers (std::vector <Entity> faction);
 
+        void displayCombatantStats (Entity &player, std::vector <Entity> &enemies);
+
         void displayPlayerStats (Entity &player);
+
+        void inputPlayerTarget (Entity &player, std::vector <Entity> &enemies);
+
+        int getGuardTargetIndex (Entity &player);
 
 };
 
