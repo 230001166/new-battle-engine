@@ -39,6 +39,9 @@ void skillFunctions::attack (Entity &user, Entity &enemy, bodyPart &target) {
         }
 
         target.health -= healthDamage; if (healthDamage > 0) { std::cout << enemy.name << "'s " << target.name << " took " << healthDamage << " damage!" << std::endl; }
+        if (target.health <= 0) {
+            target.onDestruction (enemy);
+        }
     }
 
 }

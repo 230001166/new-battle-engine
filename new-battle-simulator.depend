@@ -1,8 +1,10 @@
 # depslib dependency file v1.0
-1555255423 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\ondestructionfunctions.cpp
+1555510881 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\ondestructionfunctions.cpp
+	<iostream>
 	"onDestructionFunctions.h"
+	"Entity.h"
 
-1555255423 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\ondestructionfunctions.h
+1555510770 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\ondestructionfunctions.h
 
 1555255497 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\statusfunctions.cpp
 	"statusFunctions.h"
@@ -21,9 +23,10 @@
 	"bodyPart.h"
 	"Weapon.h"
 
-1555257015 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\bodypart.h
+1555510789 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\bodypart.h
 	<string>
 	"Armor.h"
+	"onDestructionFunctions.h"
 
 1555258019 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\armor.h
 
@@ -31,21 +34,21 @@
 
 1555257980 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\weapon.h
 
-1555510174 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\game.cpp
+1555510922 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\game.cpp
 	<iostream>
 	"Game.h"
 	"aiFunctions.h"
 	"skillFunctions.h"
 	"utilityFunctions.h"
 
-1555510322 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\skillfunctions.cpp
+1555510862 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\skillfunctions.cpp
 	<iostream>
 	"skillFunctions.h"
 
 1555510329 c:\users\dylan\documents\programming projects 2019\new-battle-simulator\include\skillfunctions.h
 	"Entity.h"
 
-1555426475 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\aifunctions.cpp
+1555510412 source:c:\users\dylan\documents\programming projects 2019\new-battle-simulator\src\aifunctions.cpp
 	<iostream>
 	"aiFunctions.h"
 	"skillFunctions.h"

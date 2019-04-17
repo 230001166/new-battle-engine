@@ -1,11 +1,9 @@
+#include <iostream>
 #include "onDestructionFunctions.h"
+#include "Entity.h"
 
-onDestructionFunctions::onDestructionFunctions()
-{
-    //ctor
+void onDestructionFunctions::legs (Entity &parent) {
+    parent.defaultSpeed /= 2;
 }
 
-onDestructionFunctions::~onDestructionFunctions()
-{
-    //dtor
-}
+void onDestructionFunctions::doNothing (Entity &parent) { }

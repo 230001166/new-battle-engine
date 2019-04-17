@@ -34,6 +34,7 @@ Entity Game::createEntityFromName (std::string name) {
         entity.bodyParts.push_back (torso);
 
         bodyPart legs; legs.name = "Legs"; legs.isVital = false; legs.health = 10; legs.maxHealth = 10;
+        legs.onDestruction = onDestructionFunctions::legs;
         Armor legArmor (3, 5); legs.armor = legArmor;
         entity.bodyParts.push_back (legs);
 
@@ -83,6 +84,7 @@ Entity Game::createEntityFromName (std::string name) {
         entity.bodyParts.push_back (torso);
 
         bodyPart legs; legs.name = "Legs"; legs.isVital = false; legs.health = 9; legs.maxHealth = 9;
+        legs.onDestruction = onDestructionFunctions::legs;
         Armor legArmor (6, 7); legs.armor = legArmor;
         entity.bodyParts.push_back (legs);
 
@@ -105,6 +107,7 @@ Entity Game::createEntityFromName (std::string name) {
         entity.bodyParts.push_back (torso);
 
         bodyPart legs; legs.name = "Legs"; legs.isVital = false; legs.health = 9; legs.maxHealth = 9;
+        legs.onDestruction = onDestructionFunctions::legs;
         Armor legArmor (1, 1); legs.armor = legArmor;
         entity.bodyParts.push_back (legs);
 

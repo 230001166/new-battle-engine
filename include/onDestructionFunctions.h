@@ -1,16 +1,12 @@
 #ifndef ONDESTRUCTIONFUNCTIONS_H
 #define ONDESTRUCTIONFUNCTIONS_H
 
+class Entity;
 
-class onDestructionFunctions
+namespace onDestructionFunctions
 {
-    public:
-        onDestructionFunctions();
-        virtual ~onDestructionFunctions();
-
-    protected:
-
-    private:
+    void legs (Entity &parent);
+    void doNothing (Entity &parent);
 };
 
 #endif // ONDESTRUCTIONFUNCTIONS_H

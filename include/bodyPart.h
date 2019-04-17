@@ -2,6 +2,7 @@
 #define BODYPART_H
 #include <string>
 #include "Armor.h"
+#include "onDestructionFunctions.h"
 
 class Entity;
 
@@ -20,7 +21,7 @@ class bodyPart
 
         bool isVital = false;
 
-        void (*onDestruction)(Entity &parent);
+        void (*onDestruction)(Entity &parent) = onDestructionFunctions::doNothing;
 
 };
 
