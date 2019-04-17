@@ -25,6 +25,10 @@ class Game
 
         int getGuardTargetIndex (Entity &player);
 
+        void sortCombatantsBySpeed (std::vector <Entity> &combatants);
+
+        int returnIndexOfPlayer (std::vector <Entity> &combatants);
+
 };
 
 #endif // GAME_H

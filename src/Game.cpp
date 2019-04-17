@@ -55,7 +55,7 @@ Entity Game::createEntityFromName (std::string name) {
     if (name == "rat") {
         entity.name = "Rat";
 
-        entity.defaultSpeed = 80;
+        entity.defaultSpeed = 60;
 
         Weapon fangs ("Fangs", 2, 1);
         entity.weapon = fangs;
@@ -69,7 +69,7 @@ Entity Game::createEntityFromName (std::string name) {
     if (name == "bandit-1") {
         entity.name = "Bandit";
 
-        entity.defaultSpeed = 85;
+        entity.defaultSpeed = 115;
 
         Weapon dagger ("Dagger", 5, 7);
         entity.weapon = dagger;
@@ -139,11 +139,13 @@ Entity Game::createEntityFromName (std::string name) {
 }
 
 void Game::battle (std::vector <Entity> &combatants) {
+    for (unsigned int i = 0; i < combatants.size (); i++) { combatants [i].updateActualSpeed (); }
     while (factionHasAliveMembers (combatants, "player") && factionHasAliveMembers (combatants, "enemy")) {
-        displayCombatantStats (combatants);
+        sortCombatantsBySpeed (combatants);
         for (unsigned int i = 0; i < combatants.size (); i++) {
             if (combatants [i].isAlive () && combatants [i].faction == "player") {
                 combatants [i].updateStats ();
+                displayCombatantStats (combatants);
                 std::cout << "[1] Attack \n[2] Parry\n[3] Guard" << std::endl;
                 int choice = -1;
 
@@ -165,10 +167,30 @@ void Game::battle (std::vector <Entity> &combatants) {
             }
             if (combatants [i].isAlive () && combatants [i].faction == "enemy") {
                 combatants [i].updateStats ();
-                combatants [i].AI (combatants [i], combatants [0]);
+                combatants [i].AI (combatants [i], combatants [returnIndexOfPlayer (combatants)]);
             }
         }
 
+    }
+}
+
+int Game::returnIndexOfPlayer (std::vector <Entity> &combatants) {
+    for (unsigned int i = 0; i < combatants.size (); i++) {
+        if (combatants [i].isAlive () && combatants [i].faction == "player") { return i; }
+    }
+}
+
+void Game::sortCombatantsBySpeed (std::vector <Entity> &combatants) {
+    std::vector <Entity> temp (combatants); int amountOfCombatants = temp.size ();
+
+    combatants.clear ();
+
+    while (combatants.size () < amountOfCombatants) {
+        int highestSpeed = 0, highestSpeedIndex = 0;
+        for (unsigned int i = 0; i < temp.size (); i++) {
+            if (temp [i].actualSpeed > highestSpeed) { highestSpeed = temp [i].actualSpeed; highestSpeedIndex = i; }
+        }
+        combatants.push_back (temp [highestSpeedIndex]); temp.erase (temp.begin () + highestSpeedIndex);
     }
 }
 
