@@ -137,6 +137,35 @@ Entity Game::createEntityFromName (std::string name) {
         entity.bodyParts.push_back (tail);
 
     }
+    if (name == "chimera") {
+        entity.name = "Chimera";
+
+        entity.defaultSpeed = 88;
+
+        Weapon bladearms ("Blade Arms", 16, 15);
+
+        bodyPart core; core.name = "core"; core.isVital = true; core.health = 50; core.maxHealth = 50;
+        Armor coreArmor (0, 0); core.armor = coreArmor;
+        entity.bodyParts.push_back (core);
+
+        bodyPart eye; eye.name = "eye"; eye.isVital = false; eye.health = 14; eye.maxHealth = 14;
+        eye.onDestruction = onDestructionFunctions::chimeraEye;
+        Armor eyeArmor (0, 0); eye.armor = eyeArmor;
+        entity.bodyParts.push_back (eye);
+
+        bodyPart bladeArm; bladeArm.name = "blade arm"; bladeArm.isVital = false; bladeArm.health = 10; bladeArm.maxHealth = 10;
+        bladeArm.onDestruction = onDestructionFunctions::chimeraArms;
+        Armor bladeArmor (4, 3); bladeArm.armor = bladeArmor;
+        entity.bodyParts.push_back (bladeArm);
+        entity.bodyParts.push_back (bladeArm);
+        entity.bodyParts.push_back (bladeArm);
+
+        bodyPart legs; legs.name = "legs"; legs.isVital = false; legs.health = 12; legs.maxHealth = 12;
+        legs.onDestruction = onDestructionFunctions::legs;
+        Armor legArmor (0, 0); legs.armor = legArmor;
+        entity.bodyParts.push_back (legs);
+
+    }
 
     return entity;
 }
@@ -285,19 +314,14 @@ void Game::displayPlayerStats (Entity &player) {
 void Game::loop () {
     Entity player = createEntityFromName ("player");
     while (player.isAlive ()) {
-        const int NUMBER_OF_ENEMIES = 5;
-        std::string enemyNames [NUMBER_OF_ENEMIES] = {"slime","bandit-1","bandit-2","dragon","rat"};
         Entity enemy;
-
-        enemy = createEntityFromName ("rat");
-        enemy.updateActualSpeed ();
 
         std::vector <Entity> combatants;
         combatants.push_back (player);
+        enemy = createEntityFromName ("rat");
         combatants.push_back (enemy);
         combatants.push_back (enemy);
-        enemy = createEntityFromName ("bandit-1"); combatants.push_back (enemy);
-
+        combatants.push_back (enemy);
         battle (combatants);
     }
 

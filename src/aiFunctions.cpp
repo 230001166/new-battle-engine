@@ -12,13 +12,16 @@ void aiFunctions::bandit_one (Entity &user, Entity &target) {
 
     if (randomNumber <= ATTACK_CHANCE) {
         randomNumber = utilityFunctions::random (1, targetPriorities::head + targetPriorities::torso + targetPriorities::legs);
-
         if (randomNumber <= targetPriorities::head) {
             skillFunctions::attack (user, target, target.bodyParts [0]);
         } else if (randomNumber <= targetPriorities::head + targetPriorities::torso) {
             skillFunctions::attack (user, target, target.bodyParts [1]);
         } else {
-            skillFunctions::attack (user, target, target.bodyParts [2]);
+            if (target.bodyParts [2].health <= 0) {
+                skillFunctions::attack (user, target, target.bodyParts [utilityFunctions::random (0, 1)]);
+            } else {
+                skillFunctions::attack (user, target, target.bodyParts [2]);
+            }
         }
     } else if (randomNumber <= PARRY_CHANCE+ATTACK_CHANCE) {
         randomNumber = utilityFunctions::random (1, targetPriorities::head + targetPriorities::torso + targetPriorities::legs);
@@ -58,7 +61,11 @@ void aiFunctions::bandit_two (Entity &user, Entity &target) {
         } else if (randomNumber <= targetPriorities::head + targetPriorities::torso) {
             skillFunctions::attack (user, target, target.bodyParts [1]);
         } else {
-            skillFunctions::attack (user, target, target.bodyParts [2]);
+            if (target.bodyParts [2].health <= 0) {
+                skillFunctions::attack (user, target, target.bodyParts [utilityFunctions::random (0, 1)]);
+            } else {
+                skillFunctions::attack (user, target, target.bodyParts [2]);
+            }
         }
     } else if (randomNumber <= PARRY_CHANCE+ATTACK_CHANCE) {
         randomNumber = utilityFunctions::random (1, targetPriorities::head + targetPriorities::torso + targetPriorities::legs);
@@ -98,7 +105,11 @@ void aiFunctions::slime (Entity &user, Entity &target) {
         } else if (randomNumber <= targetPriorities::head + targetPriorities::torso) {
             skillFunctions::attack (user, target, target.bodyParts [1]);
         } else {
-            skillFunctions::attack (user, target, target.bodyParts [2]);
+            if (target.bodyParts [2].health <= 0) {
+                skillFunctions::attack (user, target, target.bodyParts [utilityFunctions::random (0, 1)]);
+            } else {
+                skillFunctions::attack (user, target, target.bodyParts [2]);
+            }
         }
     } else if (randomNumber <= PARRY_CHANCE+ATTACK_CHANCE) {
         skillFunctions::parry (user, user.bodyParts [0]);
@@ -120,7 +131,11 @@ void aiFunctions::rat (Entity &user, Entity &target) {
         } else if (randomNumber <= targetPriorities::head + targetPriorities::torso) {
             skillFunctions::attack (user, target, target.bodyParts [1]);
         } else {
-            skillFunctions::attack (user, target, target.bodyParts [2]);
+            if (target.bodyParts [2].health <= 0) {
+                skillFunctions::attack (user, target, target.bodyParts [utilityFunctions::random (0, 1)]);
+            } else {
+                skillFunctions::attack (user, target, target.bodyParts [2]);
+            }
         }
     } else if (randomNumber <= PARRY_CHANCE+ATTACK_CHANCE) {
         skillFunctions::parry (user, user.bodyParts [0]);

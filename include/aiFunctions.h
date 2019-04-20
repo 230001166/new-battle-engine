@@ -4,6 +4,7 @@
 
 namespace aiFunctions
 {
+
     void bandit_one (Entity &user, Entity &target);
 
     void bandit_two (Entity &user, Entity &target);
